@@ -32,8 +32,8 @@
             letter-spacing: 0.5px;
         }
 
-        /* Contenedor para poner las dos secciones una al lado de la otra */
-        .contenedor-principal {
+        
+        .contenedor-principal {  /* Contenedor para poner las dos secciones una al lado de la otra */
             flex: 1;
             display: flex;
             justify-content: center;
@@ -42,8 +42,8 @@
             padding-bottom: 80px;
         }
 
-        /* LADO IZQUIERDO: El recuadro azul de ingreso */
-        .tarjeta-azul {
+        
+        .tarjeta-azul { /* LADO IZQUIERDO: El recuadro azul de ingreso */
             background-color: #386EF9; 
             width: 600px;
             padding: 40px 35px;
@@ -104,8 +104,8 @@
             background-color: #3bc2dd;
         }
 
-        /* LADO DERECHO: Sección de Registración sobre fondo blanco */
-        .seccion-registracion {
+        
+        .seccion-registracion {  /* LADO DERECHO: Sección de Registración sobre fondo blanco */
             display: flex;
             align-items: center; 
             gap: 25px; 
@@ -176,7 +176,7 @@
             <div class="texto-registracion">
                 <h3>Registración</h3> <p>(si es nuevo paciente)</p>
             </div>
-            <a href="#" class="btn-registrar">Registrarse</a>
+            <a href="{% url 'registro_paciente' %}" class="btn-registrar">Registrarse</a>
         </div>
     </div>
 

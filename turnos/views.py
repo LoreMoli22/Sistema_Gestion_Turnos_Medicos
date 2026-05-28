@@ -20,3 +20,9 @@ def ingreso_paciente(request):
 
 def ingreso_profesional(request):
     return render(request, 'turnos/ingreso_profesional.html')
+
+def registro_profesional(request):
+    return render(request, 'turnos/registro_profesional.html')
+
+def registro_paciente(request):
+    return render(request, 'turnos/registro_paciente.html')

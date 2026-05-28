@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Profesional - Gestión de Turnos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #FFFFFF; /* Fondo blaco */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        
+        header {   /* Header azul que ocupa todo el ancho de punta a punta */
+            background-color: #386EF9; 
+            width: 100%;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo-titulo {
+            font-size: 24px;
+            font-weight: 500;
+            color: #FFFFFF; 
+            letter-spacing: 0.5px;
+        }
+
+        .subtitulo-portal {
+            font-size: 26px;
+            font-style: italic; 
+            font-weight: 500;
+            color: #FFFFFF; /* Letras'Portal del Profesional' */
+        }
+
+        
+        .contenedor-formulario {  /* Contenedor del formulario centralizado */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        
+        .fila-campo {     /* Fila que junta la etiqueta izquierda y la caja gris derecha */
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 20px;
+        }
+
+        
+        .etiqueta-caja {  /* La cajita blanca de la izquierda para el nombre del campo */
+            background-color: #FFFFFF;
+            border: 1px solid #A0A0A0;
+            color: #000000;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 160px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        
+        .caja-entrada {  /* Las cajas de texto grises de la derecha */
+            background-color: #DCDCDC; 
+            border: none;
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            flex: 1; 
+            outline: none;
+            color: #333333;
+        }
+
+        
+        .btn-accion {
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px 0;
+            border-radius: 8px;
+            width: 220px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: #000000; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.1s ease, filter 0.2s ease;
+        }
+
+        .btn-accion:hover {
+            filter: brightness(0.9);
+            transform: translateY(-1px);
+        }
+
+        
+        .btn-registrarse {
+            background-color: #00B050; 
+            margin-top: 20px;
+        }
+
+        
+        .btn-cancelar {
+            background-color: #FF3B3F;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-titulo">Sistema de Gestión de Turnos Médicos</div>
+        <div class="subtitulo-portal">Portal del Profesional</div>
+    </header>
+
+    <div class="contenedor-formulario">
+        <form action="#" method="POST">
+            {% csrf_token %}
+            
+            
+            <div class="fila-campo">
+                <div class="etiqueta-caja">Nombre</div>
+                <input type="text" class="caja-entrada" required>
+            </div>
+
+            
+            <div class="fila-campo">
+                <div class="etiqueta-caja">Apellido</div>
+                <input type="text" class="caja-entrada" required>
+            </div>
+
+            
+            <div class="fila-campo">
+                <div class="etiqueta-caja">Matrícula</div>
+                <input type="text" class="caja-entrada" required>
+            </div>
+
+            
+            <div class="fila-campo">
+                <div class="etiqueta-caja">Especialidad</div>
+                <input type="text" class="caja-entrada" required>
+            </div>
+
+            
+            <div class="fila-campo">
+                <div class="etiqueta-caja">Contraseña</div>
+                <input type="password" class="caja-entrada" required>
+            </div>
+
+            
+            <div class="fila-campo">
+                <div class="etiqueta-caja">Conf. Contraseña</div>
+                <input type="password" class="caja-entrada" required>
+            </div>
+
+            
+            <button type="submit" class="btn-accion btn-registrarse">Registrarse</button>
+            <a href="{% url 'ingreso_profesional' %}" class="btn-accion btn-cancelar">Cancelar</a>
+            
+        </form>
+    </div>
+
+</body>
+</html>
