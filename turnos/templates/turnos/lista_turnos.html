@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Turnos Médicos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f7f6; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .estado { font-weight: bold; padding: 4px 8px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <h1>Listado de Turnos Médicos</h1>
+    <p>Acá se muestran todos los turnos registrados en el sistema actualmente.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha y Hora</th>
+                <th>Paciente</th>
+                <th>Profesional / Especialidad</th>
+                <th>Motivo</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for turno in turnos %}
+            <tr>
+                <td>{{ turno.fecha }} a las {{ turno.hora }} hs</td>
+                <td>{{ turno.paciente.apellido }}, {{ turno.paciente.nombre }}</td>
+                <td>Dr. {{ turno.profesional.apellido }} ({{ turno.profesional.especialidad }})</td>
+                <td>{{ turno.motivo|default:"No especificado" }}</td>
+                <td><span class="estado">{{ turno.estado }}</span></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center;">No hay turnos registrados en este momento.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

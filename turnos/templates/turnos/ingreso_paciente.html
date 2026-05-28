@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Paciente - Gestión de Turnos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #FFFFFF; /* Fondo blanco */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            width: 100%;
+            padding: 40px 50px;
+        }
+
+        .logo-titulo {
+            font-size: 28px;
+            font-weight: 500;
+            color: #386EF9; 
+            letter-spacing: 0.5px;
+        }
+
+        /* Contenedor para poner las dos secciones una al lado de la otra */
+        .contenedor-principal {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 100px; /* Espacio entre el recuadro azul y la sección derecha */
+            padding-bottom: 80px;
+        }
+
+        /* LADO IZQUIERDO: El recuadro azul de ingreso */
+        .tarjeta-azul {
+            background-color: #386EF9; 
+            width: 600px;
+            padding: 40px 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            color: white;
+            text-align: center;
+        }
+
+        .tarjeta-azul h2 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+
+        .grupo-campo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .grupo-campo label {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #FFFFFF; 
+        }
+
+        .caja-entrada {
+            background-color: #DCDCDC;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+            color: #333333;
+        }
+
+        .btn-ingresar {
+            background-color: #50D6F1; 
+            color: #FFFFFF; 
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 12px 0;
+            border-radius: 10px;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 15px;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-ingresar:hover {
+            background-color: #3bc2dd;
+        }
+
+        /* LADO DERECHO: Sección de Registración sobre fondo blanco */
+        .seccion-registracion {
+            display: flex;
+            align-items: center; 
+            gap: 25px; 
+        }
+
+        .texto-registracion {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .texto-registracion h3 {
+            color: #386EF9; 
+            font-size: 28px;
+            font-weight: 500;
+            
+        }
+
+        .texto-registracion p {
+            color: #666666;
+            font-size: 15px;
+            margin-top: 2px;
+        }
+
+        .btn-registrar {
+            border: 2px solid #386EF9; 
+            background-color: transparent;
+            color: #333333;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-registrar:hover {
+            background-color: #386EF9;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-titulo">Sistema de Gestión de Turnos Médicos</div>
+    </header>
+
+    <div class="contenedor-principal">
+        <div class="tarjeta-azul">
+            <h2>Ingreso al Portal Paciente</h2>
+            <form action="#" method="POST">
+                {% csrf_token %}
+                <div class="grupo-campo">
+                    <label for="dni">DNI</label>
+                    <input type="text" id="dni" class="caja-entrada" required>
+                </div>
+                <div class="grupo-campo">
+                    <label for="contrasena">Contraseña</label>
+                    <input type="password" id="contrasena" class="caja-entrada" required>
+                </div>
+                <button type="submit" class="btn-ingresar">Ingresar</button>
+            </form>
+        </div>
+
+        <div class="seccion-registracion">
+            <div class="texto-registracion">
+                <h3>Registración</h3> <p>(si es nuevo paciente)</p>
+            </div>
+            <a href="#" class="btn-registrar">Registrarse</a>
+        </div>
+    </div>
+
+</body>
+</html>
