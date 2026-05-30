@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - Gestión de Turnos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #FFFFFF; height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+        header {
+            background-color: #386EF9;
+            width: 100%;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo-titulo { font-size: 24px; font-weight: 500; color: #FFFFFF; }
+        .subtitulo-portal { font-size: 26px; font-style: italic; font-weight: 500; color: #FFFFFF; }
+
+        .contenedor-formulario {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; padding: 40px 0;
+        }
+
+        form { display: flex; flex-direction: column; align-items: center; gap: 15px; width: 100%; max-width: 500px; }
+
+        .fila-campo { display: flex; align-items: center; width: 100%; gap: 20px; }
+
+        .etiqueta-caja {
+            background-color: #FFFFFF; border: 1px solid #A0A0A0; color: #000000;
+            padding: 10px 15px; border-radius: 8px; font-size: 16px;
+            width: 160px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .caja-entrada {
+            background-color: #DCDCDC; border: none; padding: 12px 15px;
+            border-radius: 10px; font-size: 16px; flex: 1; outline: none; color: #333333;
+        }
+
+        .btn-accion {
+            border: none; font-size: 16px; font-weight: 500; padding: 10px 0;
+            border-radius: 8px; width: 220px; cursor: pointer; text-align: center;
+            text-decoration: none; color: #000000; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.1s ease, filter 0.2s ease;
+        }
+
+        .btn-accion:hover { filter: brightness(0.9); transform: translateY(-1px); }
+        .btn-guardar { background-color: #00B050; margin-top: 15px; }
+        .btn-cancelar { background-color: #FF3B3F; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-titulo">Sistema de Gestión de Turnos Médicos</div>
+        <div class="subtitulo-portal">Portal del Profesional</div>
+        <div style="display: flex; gap: 15px;">
+            <a href="{% url 'lista_turnos_profesional' %}" style="color: white; text-decoration: none; font-size: 16px;">Mis Turnos</a>
+            <a href="{% url 'cerrar_sesion' %}" style="color: white; text-decoration: none; font-size: 16px;">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <div class="contenedor-formulario">
+        <form action="{% url 'editar_profesional' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="fila-campo">
+                <div class="etiqueta-caja">Nombre</div>
+                <input type="text" name="nombre" value="{{ profesional.nombre }}" class="caja-entrada" required>
+            </div>
+
+            <div class="fila-campo">
+                <div class="etiqueta-caja">Apellido</div>
+                <input type="text" name="apellido" value="{{ profesional.apellido }}" class="caja-entrada" required>
+            </div>
+
+            <div class="fila-campo">
+                <div class="etiqueta-caja">Matrícula</div>
+                <input type="text" value="{{ profesional.matricula }}" class="caja-entrada" disabled>
+            </div>
+
+            <div class="fila-campo">
+                <div class="etiqueta-caja">Especialidad</div>
+                <input type="text" name="especialidad" value="{{ profesional.especialidad }}" class="caja-entrada" required>
+            </div>
+
+            <div class="fila-campo">
+                <div class="etiqueta-caja">Email</div>
+                <input type="email" name="email" value="{{ profesional.email }}" class="caja-entrada" required>
+            </div>
+
+            <button type="submit" class="btn-accion btn-guardar">Guardar cambios</button>
+            <a href="{% url 'lista_turnos_profesional' %}" class="btn-accion btn-cancelar">Cancelar</a>
+
+        </form>
+    </div>
+
+</body>
+</html>

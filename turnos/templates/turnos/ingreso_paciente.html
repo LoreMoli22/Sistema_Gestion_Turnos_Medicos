@@ -32,8 +32,8 @@
             letter-spacing: 0.5px;
         }
 
-        
-        .contenedor-principal {  /* Contenedor para poner las dos secciones una al lado de la otra */
+        /* Contenedor para poner las dos secciones una al lado de la otra */
+        .contenedor-principal {
             flex: 1;
             display: flex;
             justify-content: center;
@@ -42,8 +42,8 @@
             padding-bottom: 80px;
         }
 
-        
-        .tarjeta-azul { /* LADO IZQUIERDO: El recuadro azul de ingreso */
+        /* LADO IZQUIERDO: El recuadro azul de ingreso */
+        .tarjeta-azul {
             background-color: #386EF9; 
             width: 600px;
             padding: 40px 35px;
@@ -104,8 +104,8 @@
             background-color: #3bc2dd;
         }
 
-        
-        .seccion-registracion {  /* LADO DERECHO: Sección de Registración sobre fondo blanco */
+        /* LADO DERECHO: Sección de Registración sobre fondo blanco */
+        .seccion-registracion {
             display: flex;
             align-items: center; 
             gap: 25px; 
@@ -155,19 +155,31 @@
         <div class="logo-titulo">Sistema de Gestión de Turnos Médicos</div>
     </header>
 
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: green; font-size: 16px; text-align: center; margin-top: 20px;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
     <div class="contenedor-principal">
         <div class="tarjeta-azul">
             <h2>Ingreso al Portal Paciente</h2>
-            <form action="#" method="POST">
-                {% csrf_token %}
+            <form action="{% url 'ingreso_paciente' %}" method="POST">
+                 {% csrf_token %}
                 <div class="grupo-campo">
                     <label for="dni">DNI</label>
-                    <input type="text" id="dni" class="caja-entrada" required>
+                    <input type="text" id="dni" name="dni" class="caja-entrada" required>
                 </div>
                 <div class="grupo-campo">
                     <label for="contrasena">Contraseña</label>
-                    <input type="password" id="contrasena" class="caja-entrada" required>
+                    <input type="password" id="contrasena" name="contrasena" class="caja-entrada" required>
                 </div>
+                {% if messages %}
+                     {% for message in messages %}
+                          <p style="color: white; font-size: 14px; margin-top: 10px;">{{ message }}</p>
+                     {% endfor %}
+                {% endif %}
+
                 <button type="submit" class="btn-ingresar">Ingresar</button>
             </form>
         </div>

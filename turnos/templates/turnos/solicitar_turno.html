@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro Paciente - Gestión de Turnos</title>
+    <title>Solicitar Turno - Gestión de Turnos</title>
     <style>
         * {
             margin: 0;
@@ -13,16 +13,15 @@
         }
 
         body {
-            background-color: #FFFFFF; /* Fondo blanco */
+            background-color: #FFFFFF;
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
         }
 
-        
-        header {         /* Header azul que ocupa todo el ancho */
-            background-color: #386EF9; 
+        header {
+            background-color: #386EF9;
             width: 100%;
             padding: 25px 50px;
             display: flex;
@@ -34,19 +33,18 @@
         .logo-titulo {
             font-size: 24px;
             font-weight: 500;
-            color: #FFFFFF; 
+            color: #FFFFFF;
             letter-spacing: 0.5px;
         }
 
         .subtitulo-portal {
             font-size: 26px;
-            font-style: italic; 
+            font-style: italic;
             font-weight: 500;
-            color: #FFFFFF; 
+            color: #FFFFFF;
         }
 
-        
-        .contenedor-formulario {  /* Contenedor del formulario centralizado */
+        .contenedor-formulario {
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -64,16 +62,14 @@
             max-width: 500px;
         }
 
-        
-        .fila-campo {  /* Fila que junta la etiqueta izquierda y la caja gris derecha */
+        .fila-campo {
             display: flex;
             align-items: center;
             width: 100%;
             gap: 20px;
         }
 
-        
-        .etiqueta-caja {   /* La cajita blanca de la izquierda para el nombre del campo */
+        .etiqueta-caja {
             background-color: #FFFFFF;
             border: 1px solid #A0A0A0;
             color: #000000;
@@ -85,9 +81,8 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        
-        .caja-entrada {  /* Las cajas de texto grises de la derecha */
-            background-color: #DCDCDC; 
+        .caja-entrada {
+            background-color: #DCDCDC;
             border: none;
             padding: 12px 15px;
             border-radius: 10px;
@@ -97,8 +92,7 @@
             color: #333333;
         }
 
-        
-        .btn-accion {   /* Estilo base para los botones del fondo */
+        .btn-accion {
             border: none;
             font-size: 16px;
             font-weight: 500;
@@ -108,7 +102,7 @@
             cursor: pointer;
             text-align: center;
             text-decoration: none;
-            color: #000000; 
+            color: #000000;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.1s ease, filter 0.2s ease;
         }
@@ -118,13 +112,11 @@
             transform: translateY(-1px);
         }
 
-        
-        .btn-registrarse {
-            background-color: #00B050; 
+        .btn-confirmar {
+            background-color: #00B050;
             margin-top: 15px;
         }
 
-        
         .btn-cancelar {
             background-color: #FF3B3F;
         }
@@ -138,41 +130,37 @@
     </header>
 
     <div class="contenedor-formulario">
-        <form action="{% url 'registro_paciente' %}" method="POST">
-            {% csrf_token %}             
+        <form action="{% url 'solicitar_turno' %}" method="POST">
+            {% csrf_token %}
+
             <div class="fila-campo">
-                <div class="etiqueta-caja">Nombre</div>
-                <input type="text" name="nombre" class="caja-entrada" required>
+                <div class="etiqueta-caja">Profesional</div>
+                <select name="profesional" class="caja-entrada" required>
+                    <option value="">-- Seleccioná un profesional --</option>
+                    {% for p in profesionales %}
+                        <option value="{{ p.id }}">Dr/a. {{ p.apellido }}, {{ p.nombre }} ({{ p.especialidad }})</option>
+                    {% endfor %}
+                </select>
             </div>
 
             <div class="fila-campo">
-                <div class="etiqueta-caja">Apellido</div>
-                <input type="text" name="apellido" class="caja-entrada" required>
+                <div class="etiqueta-caja">Fecha</div>
+                <input type="date" name="fecha" class="caja-entrada" required>
             </div>
 
             <div class="fila-campo">
-                <div class="etiqueta-caja">DNI</div>
-                <input type="text" name="dni" class="caja-entrada" required>
+                <div class="etiqueta-caja">Hora</div>
+                <input type="time" name="hora" class="caja-entrada" required>
             </div>
 
             <div class="fila-campo">
-                <div class="etiqueta-caja">Email</div>
-                <input type="tel"  name="email" class="caja-entrada" required>
+                <div class="etiqueta-caja">Motivo</div>
+                <input type="text" name="motivo" class="caja-entrada">
             </div>
 
-            <div class="fila-campo">
-                <div class="etiqueta-caja">Contraseña</div>
-                <input type="password" name="contrasena" class="caja-entrada" required>
-            </div>
+            <button type="submit" class="btn-accion btn-confirmar">Confirmar Turno</button>
+            <a href="{% url 'lista_turnos' %}" class="btn-accion btn-cancelar">Cancelar</a>
 
-            <div class="fila-campo">
-                <div class="etiqueta-caja">Conf. Contraseña</div>
-                <input type="password" name="conf_contrasena" class="caja-entrada" required>
-            </div>
-
-            <button type="submit" class="btn-accion btn-registrarse">Registrarse</button>
-            <a href="{% url 'ingreso_paciente' %}" class="btn-accion btn-cancelar">Cancelar</a>
-            
         </form>
     </div>
 

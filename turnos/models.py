@@ -7,7 +7,7 @@ class Paciente(models.Model):
     apellido = models.CharField(max_length=100)
     dni = models.CharField(max_length=20, unique=True)
     email = models.EmailField(unique=True)
-    contraseña = models.CharField(max_length=255) # Para guardar la clave encriptada
+    contrasena = models.CharField(max_length=255) # Para guardar la clave encriptada
 
     def __str__(self):
         return f"{self.apellido}, {self.nombre} (DNI: {self.dni})"
@@ -18,7 +18,8 @@ class Profesional(models.Model):
     apellido = models.CharField(max_length=100)
     matricula = models.CharField(max_length=50, unique=True)
     especialidad = models.CharField(max_length=100)
-    contraseña = models.CharField(max_length=255) # Para guardar la clave encriptada
+    email = models.EmailField(unique=True, null=True, blank=True)
+    contrasena = models.CharField(max_length=255) # Para guardar la clave encriptada
 
     def __str__(self):
         return f"Dr/a. {self.apellido}, {self.nombre} - M.P.: {self.matricula} ({self.especialidad})"
@@ -29,6 +30,7 @@ class Turno(models.Model):
         ('PENDIENTE', 'Pendiente'),
         ('CONFIRMADO', 'Confirmado'),
         ('CANCELADO', 'Cancelado'),
+        ('REALIZADO', 'Realizado'),
     ]
 
     # Conexiones con los otros modelos
