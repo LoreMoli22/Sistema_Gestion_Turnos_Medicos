@@ -6,24 +6,23 @@ Este es un proyecto desarrollado en **Django** y **Python** para la gestión int
 
 ---
 
-### Estado del Proyecto (Semana 2)
-
-Actualmente, el proyecto cuenta con la estructura base configurada, la base de datos inicializada y los primeros modelos de datos registrados en el panel de administración.
-
-### Componentes Desarrollados:
-
-***Modelo Paciente:** Gestión de datos personales (Nombre, Apellido, DNI, Email, Contraseña).
-***Modelo Profesional:** Gestión de especialistas (Nombre, Apellido, Matrícula, Especialidad, Contraseña).
-***Panel de Administración:** Modelos registrados y listos para la gestión visual de datos.
-
----
-
 ### Tecnologías Utilizadas:
 
 ***Python** 3.13+
 ***Django** 5.x
 ***SQLite** (Base de datos local por defecto)
 ***Git & GitHub** para el control de versiones
+
+---
+
+### Funcionalidades Principales
+
+- Registro, login y cierre de sesión de pacientes y profesionales
+- Alta, baja y modificación de datos de pacientes y profesionales
+- Solicitud de turnos por parte del paciente
+- Visualización de turnos propios (paciente ve los suyos, profesional los suyos)
+- Cambio de estado del turno: Pendiente, Confirmado, Cancelado, Realizado
+- Contraseñas encriptadas con hasheo seguro
 
 ---
 
@@ -43,16 +42,16 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 
     ### PowerShell
    python -m venv env
-     .\env\Scripts\Activate.ps1
-     `
+     .\venv\Scripts\Activate.ps1
+     
 
-3. **Instalar Django:**
+3. **Instalar dependencias:**
 
     ### PowerShell
-    pip install django
+    pip install -r requirements.tx
 
 
-4. **Aplicar las migraciones de la base de datos:**
+4. **Aplicar las migraciones:**
 
     ### PowerShell
     python manage.py migrate
