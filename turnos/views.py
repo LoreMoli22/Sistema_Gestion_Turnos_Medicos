@@ -230,7 +230,7 @@ def editar_profesional(request):
         profesional.nombre = request.POST.get('nombre')
         profesional.apellido = request.POST.get('apellido')
         profesional.especialidad = request.POST.get('especialidad')
-        profesional.email = request.POST.get('email')  # ← agregá esta línea
+        profesional.email = request.POST.get('email')  
         profesional.save()
         messages.success(request, "Datos actualizados correctamente.")
         return redirect('lista_turnos_profesional')
