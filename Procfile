@@ -1,0 +1,1 @@
+web: gunicorn sistema_gestion_turnos.wsgi:application --bind 0.0.0.0:$PORT
