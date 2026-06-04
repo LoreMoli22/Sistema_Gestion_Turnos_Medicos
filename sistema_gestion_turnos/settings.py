@@ -27,7 +27,23 @@ import os
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'sistemagestionturnosmedicos-production.up.railway.app',
+    'localhost',
+    '127.0.0.1',
+]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://sistemagestionturnosmedicos-production.up.railway.app/',
+]
+
+# SEGURIDAD EXTRA: Para que Railway procese bien el login seguro
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+
 
 
 # Application definition
