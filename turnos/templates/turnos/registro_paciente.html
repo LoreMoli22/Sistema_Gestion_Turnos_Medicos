@@ -190,21 +190,36 @@
                 <input type="email"  name="email" class="caja-entrada" required>
             </div>
 
+            
             <div class="fila-campo">
                 <div class="etiqueta-caja">Contraseña</div>
-                <input type="password" name="contrasena" class="caja-entrada" required>
+                <div style="position: relative; flex: 1;">
+                    <input type="password" id="contrasena" name="contrasena" class="caja-entrada" style="width: 100%; padding-right: 45px;" required>
+                    <span onclick="togglePassword('contrasena')" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">👁</span>
+                </div>
             </div>
 
             <div class="fila-campo">
                 <div class="etiqueta-caja">Conf. Contraseña</div>
-                <input type="password" name="conf_contrasena" class="caja-entrada" required>
+                <div style="position: relative; flex: 1;">
+                    <input type="password" id="conf_contrasena" name="conf_contrasena" class="caja-entrada" style="width: 100%; padding-right: 45px;" required>
+                    <span onclick="togglePassword('conf_contrasena')" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">👁</span>
+                </div>
             </div>
+
 
             <button type="submit" class="btn-accion btn-registrarse">Registrarse</button>
             <a href="{% url 'ingreso_paciente' %}" class="btn-accion btn-cancelar">Cancelar</a>
             
         </form>
     </div>
+
+    <script>
+    function togglePassword(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+    </script>
 
 </body>
 </html>
