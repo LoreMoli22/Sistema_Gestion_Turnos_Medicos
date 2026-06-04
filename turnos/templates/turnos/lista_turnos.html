@@ -26,12 +26,6 @@
         p { color: #666; margin-bottom: 25px; }
 
 
-        .nombre-bienvenida{
-            color:#666;
-            font-weight: 600;
-            margin-right: 3px;
-        }
-
         .btn-nuevo-turno {
             display: inline-block;
             background-color: #00B050;
@@ -75,12 +69,7 @@
 
     <div class="contenido">
         <h1>Mis Turnos Registrados</h1>
-        <p>
-            {% if user.is_authenticated %}
-                <span class="nombre-bienvenida">{{ user.first_name }} {{ user.last_name }},</span>
-            {% endif %}
-            acá podés revisar el estado de tus citas solicitadas.
-        </p>
+        <p>Acá podés revisar el estado de tus citas solicitadas.</p>
         
         <a href="{% url 'solicitar_turno' %}" class="btn-nuevo-turno">+ Solicitar nuevo turno</a>
       
