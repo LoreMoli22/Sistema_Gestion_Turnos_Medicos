@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages             
 from .models import Turno, Profesional, Paciente 
 from django.contrib.auth.hashers import make_password, check_password
-
+from django.contrib.auth.decorators import user_passes_test
 
 
 def lista_turnos(request):
@@ -259,3 +259,35 @@ def baja_profesional(request):
     request.session.flush()
     messages.success(request, "Tu cuenta fue eliminada correctamente.")
     return redirect('inicio')
+
+
+def ingreso_administrador(request):
+    if request.method == 'POST':
+        usuario = request.POST.get('usuario')
+        contrasena = request.POST.get('contrasena')
+        
+        # Podés elegir acá el usuario y contraseña que vos quieras
+        if usuario == 'admin' and contrasena == 'admin123':
+            request.session['es_admin'] = True
+            return redirect('panel_administrador')
+        else:
+            messages.error(request, "Usuario o contraseña de administrador incorrectos.")
+            
+    return render(request, 'turnos/ingreso_administrador.html')
+
+
+
+def panel_administrador(request):
+    # Verificamos si en la sesión se guardó el admin (lo configuramos en el login)
+    if not request.session.get('es_admin'):
+        return redirect('elegyr_portal') # Reajustá al nombre de tu URL si es necesario
+
+    # Traemos todos los registros de la base de datos
+    pacientes = Paciente.objects.all()
+    profesionales = Profesional.objects.all()
+
+    context = {
+        'pacientes': pacientes,
+        'profesionales': profesionales,
+    }
+    return render(request, 'turnos/panel_administrador.html', context)

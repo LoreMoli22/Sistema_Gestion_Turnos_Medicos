@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Portal</title>
+    <style>
+        /* Mismos estilos base de tu sistema */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #FFFFFF; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        /* El mismo rectángulo superior azul institucional */
+        header {
+            background-color: #386EF9;
+            width: 100%;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo-titulo { font-size: 24px; font-weight: 500; color: #FFFFFF; }
+        .subtitulo-portal { font-size: 26px; font-style: italic; font-weight: 500; color: #FFFFFF; }
+
+        .contenido { padding: 40px 50px; flex: 1; }
+        h1 { color: #386EF9; margin-bottom: 10px; font-weight: 600; }
+        p { color: #666; margin-bottom: 30px; }
+        
+        /* Subtítulos de las tablas con toque azul */
+        h2 { color: #333; margin: 30px 0 15px 0; font-size: 20px; border-left: 4px solid #386EF9; padding-left: 10px; }
+
+        /* Estilo idéntico de tablas de tu lista de turnos */
+        .tabla-contenedor { margin-bottom: 30px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        th, td { padding: 14px 18px; border: 1px solid #EAEAEA; text-align: left; }
+        th { background-color: #386EF9; color: white; font-weight: 500; }
+        tr:nth-child(even) { background-color: #F8FAFF; }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; text-align: center; gap: 15px; padding: 20px; }
+            .contenido { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-titulo">Sistema de Gestión de Turnos Médicos</div>
+        <div class="subtitulo-portal">Portal Administrador</div>
+        <div style="display: flex; gap: 20px;">
+            <a href="{% url 'cerrar_sesion' %}" style="color: white; text-decoration: none; font-size: 18px; font-weight: 500;">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <div class="contenido">
+        <h1>Control General del Sistema</h1>
+        <p>Bienvenido/a al panel de control. Acá podés verificar los usuarios activos en la plataforma.</p>
+        
+        <h2>Pacientes Registrados ({{ pacientes.count }})</h2>
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre y Apellido</th>
+                        <th>DNI / Usuario</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for paciente in pacientes %}
+                    <tr>
+                        <td>{{ paciente.user.first_name }} {{ paciente.user.last_name }}</td>
+                        <td>{{ paciente.user.username }}</td>
+                        <td>{{ paciente.user.email }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" style="text-align: center; color: #999; padding: 30px;">No hay pacientes registrados en este momento.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Profesionales Médicos ({{ profesionales.count }})</h2>
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Profesional</th>
+                        <th>Especialidad</th>
+                        <th>Matrícula</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prof in profesionales %}
+                    <tr>
+                        <td>Dr/a. {{ prof.apellido }}, {{ prof.nombre }}</td>
+                        <td>{{ prof.especialidad }}</td>
+                        <td>{{ prof.matricula|default:"-" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" style="text-align: center; color: #999; padding: 30px;">No hay profesionales registrados en este momento.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
