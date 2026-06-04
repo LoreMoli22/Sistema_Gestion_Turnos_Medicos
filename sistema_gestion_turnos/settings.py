@@ -35,14 +35,19 @@ ALLOWED_HOSTS = [
 
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://sistemagestionturnosmedicos-production.up.railway.app/',
+    'https://sistemagestionturnosmedicos-production.up.railway.app',
+    'http://sistemagestionturnosmedicos-production.up.railway.app',
 ]
+
 
 # SEGURIDAD EXTRA: Para que Railway procese bien el login seguro
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = False
+SECURE_REFERER_POLICY = "same-origin"
 
+APPEND_SLASH = True
 
 
 
