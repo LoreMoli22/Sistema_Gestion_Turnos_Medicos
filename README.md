@@ -62,3 +62,9 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
     python manage.py runserver
 
 ### Luego, ingresá a http://127.0.0.1:8000/ en tu navegador. Para acceder al panel administrador, usá http://127.0.0.1:8000/admin.
+
+
+### Sistema en línea (Deploy)
+
+El sistema está disponible en:
+https://sistemagestionturnosmedicos-production.up.railway.app/turnos/
