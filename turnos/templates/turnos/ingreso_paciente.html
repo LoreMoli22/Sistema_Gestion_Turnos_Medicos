@@ -199,10 +199,17 @@
                     <label for="dni">DNI</label>
                     <input type="text" id="dni" name="dni" class="caja-entrada" required>
                 </div>
+
+
+                                
                 <div class="grupo-campo">
                     <label for="contrasena">Contraseña</label>
-                    <input type="password" id="contrasena" name="contrasena" class="caja-entrada" required>
+                    <div style="position: relative; width: 100%;">
+                        <input type="password" id="contrasena" name="contrasena" class="caja-entrada" style="padding-right: 45px;" required>
+                        <span onclick="togglePassword('contrasena')" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">👁</span>
+                    </div>
                 </div>
+
                 {% if messages %}
                      {% for message in messages %}
                           <p style="color: white; font-size: 14px; margin-top: 10px;">{{ message }}</p>
@@ -220,6 +227,13 @@
             <a href="{% url 'registro_paciente' %}" class="btn-registrar">Registrarse</a>
         </div>
     </div>
+
+    <script>
+    function togglePassword(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+    </script>
 
 </body>
 </html>
