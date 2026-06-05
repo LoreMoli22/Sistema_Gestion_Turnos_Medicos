@@ -35,9 +35,7 @@ urlpatterns = [
     
     path('baja-profesional/', views.baja_profesional, name='baja_profesional'),
     
-    path('admin-login/', views.ingreso_administrador, name='ingreso_administrador'),
-
-    path('admin-portal/', views.panel_administrador, name='panel_administrador'),
+    
 ]
 
 
