@@ -267,7 +267,7 @@ def ingreso_administrador(request):
         contrasena = request.POST.get('contrasena')
         
         # Podés elegir acá el usuario y contraseña que vos quieras
-        if usuario == 'admin' and contrasena == 'admin123':
+        if usuario == 'Lore22' and contrasena == '123456789':
             request.session['es_admin'] = True
             return redirect('panel_administrador')
         else:
@@ -280,7 +280,7 @@ def ingreso_administrador(request):
 def panel_administrador(request):
     # Verificamos si en la sesión se guardó el admin (lo configuramos en el login)
     if not request.session.get('es_admin'):
-        return redirect('elegyr_portal') # Reajustá al nombre de tu URL si es necesario
+        return redirect('elegir_portal') # Reajustá al nombre de tu URL si es necesario
 
     # Traemos todos los registros de la base de datos
     pacientes = Paciente.objects.all()
