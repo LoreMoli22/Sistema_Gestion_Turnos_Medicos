@@ -68,3 +68,9 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 
 El sistema está disponible en:
 https://sistemagestionturnosmedicos-production.up.railway.app
+
+
+### Panel de Administración
+
+Acceso al panel de administración (solo para administradores):
+https://sistemagestionturnosmedicos-production.up.railway.app/admin/
