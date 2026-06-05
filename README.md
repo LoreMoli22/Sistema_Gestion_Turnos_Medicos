@@ -67,4 +67,4 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 ### Sistema en línea (Deploy)
 
 El sistema está disponible en:
-https://sistemagestionturnosmedicos-production.up.railway.app/turnos/
+https://sistemagestionturnosmedicos-production.up.railway.app
