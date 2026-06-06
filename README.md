@@ -63,6 +63,7 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 
 ### Luego, ingresá a http://127.0.0.1:8000/ en tu navegador. Para acceder al panel administrador, usá http://127.0.0.1:8000/admin.
 
+---
 
 ### Sistema en línea (Deploy)
 
@@ -74,3 +75,20 @@ https://sistemagestionturnosmedicos-production.up.railway.app
 
 Acceso al panel de administración (solo para administradores):
 https://sistemagestionturnosmedicos-production.up.railway.app/admin/
+
+---
+
+### Entornos del sistema
+
+El sistema cuenta con dos entornos independientes:
+
+**Entorno local (desarrollo)**
+- URL: http://127.0.0.1:8000/
+- Base de datos: SQLite (archivo db.sqlite3 local)
+- Solo accesible desde la computadora de desarrollo
+
+**Entorno producción (Railway)**
+- URL: https://sistemagestionturnosmedicos-production.up.railway.app/
+- Base de datos: PostgreSQL en Railway
+- Accesible desde cualquier navegador
+- Los datos de ambos entornos son independientes y no se cruzan
