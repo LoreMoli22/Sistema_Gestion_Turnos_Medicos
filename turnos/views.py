@@ -10,9 +10,10 @@ def lista_turnos(request):
     paciente_id = request.session.get('paciente_id')
     if paciente_id:
         todos_los_turnos = Turno.objects.filter(paciente_id=paciente_id)
+        paciente = Paciente.objects.get(id=paciente_id)
     else:
         return redirect('ingreso_paciente')
-    return render(request, 'turnos/lista_turnos.html', {'turnos': todos_los_turnos})
+    return render(request, 'turnos/lista_turnos.html', {'turnos': todos_los_turnos, 'paciente': paciente})
 
 def inicio(request):
     return render(request, 'turnos/inicio.html')

@@ -69,6 +69,7 @@
 
     <div class="contenido">
         <h1>Mis Turnos Registrados</h1>
+        <p style="color: #386EF9; font-size: 18px; font-weight: 500;">{{ paciente.nombre }} {{ paciente.apellido }}</p>
         <p>Acá podés revisar el estado de tus citas solicitadas.</p>
         
         <a href="{% url 'solicitar_turno' %}" class="btn-nuevo-turno">+ Solicitar nuevo turno</a>

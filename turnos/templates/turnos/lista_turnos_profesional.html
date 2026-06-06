@@ -103,6 +103,7 @@
     
     <div class="contenido">
         <h1>Mis Turnos Asignados</h1>
+        <p style="color: #386EF9; font-size: 18px; font-weight: 500;">Dr/a. {{ profesional.nombre }} {{ profesional.apellido }} — {{ profesional.especialidad }}</p>
         <p>Acá puede visualizar y gestionar los estados de las citas de sus pacientes.</p>
       
         <table>
@@ -126,7 +127,7 @@
                     <td>
                         <span class="estado 
                             {% if turno.estado == 'PENDIENTE' %}estado-pendiente
-                            {% elif turno.estado == 'CONFIRMADO' %}estado-
+                            {% elif turno.estado == 'CONFIRMADO' %}estado-confirmado
                             {% elif turno.estado == 'REALIZADO' %}estado-realizado
                             {% else %}estado-cancelado{% endif %}">
                             {{ turno.estado }}
