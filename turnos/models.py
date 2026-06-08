@@ -1,6 +1,5 @@
 from django.db import models
-
-from django.db import models
+from django.contrib.auth.hashers import make_password, identify_hasher
 
 class Paciente(models.Model):
     nombre = models.CharField(max_length=100)
@@ -11,6 +10,15 @@ class Paciente(models.Model):
 
     def __str__(self):
         return f"{self.apellido}, {self.nombre} (DNI: {self.dni})"
+
+    def save(self, *args, **kwargs):
+        # 🔒 Si la contraseña NO está encriptada todavía, la encriptamos antes de guardar
+        try:
+            identify_hasher(self.contrasena)
+        except ValueError:
+            self.contrasena = make_password(self.contrasena)
+            
+        super().save(*args, **kwargs)
 
 
 class Profesional(models.Model):
@@ -24,6 +32,15 @@ class Profesional(models.Model):
     def __str__(self):
         return f"Dr/a. {self.apellido}, {self.nombre} - M.P.: {self.matricula} ({self.especialidad})"
 
+
+    def save(self, *args, **kwargs):
+        # 🔒 Si la contraseña NO está encriptada todavía, la encriptamos antes de guardar
+        try:
+            identify_hasher(self.contrasena)
+        except ValueError:
+            self.contrasena = make_password(self.contrasena)
+            
+        super().save(*args, **kwargs)
 
 class Turno(models.Model):
     ESTADOS_CHOICES = [
