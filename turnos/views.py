@@ -178,14 +178,14 @@ def lista_turnos_profesional(request):
 
 
 def cambiar_estado_turno(request, turno_id):
-    # Verificamos que sea el profesional quien hace el cambio
+    # Verifica que sea el profesional quien hace el cambio
     if not request.session.get('profesional_id'):
         return redirect('ingreso_profesional')
 
     if request.method == 'POST':
         nuevo_estado = request.POST.get('estado')
         try:
-            # Buscamos el turno específico por su ID
+            # Busca el turno específico por su ID
             turno = Turno.objects.get(id=turno_id)
             turno.estado = nuevo_estado
             turno.save()

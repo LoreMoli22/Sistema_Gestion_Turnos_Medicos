@@ -46,6 +46,32 @@
             color: #50D6F1; 
         }
 
+        /* Estilos agregados para que el mensaje de éxito se vea hermoso */
+        .contenedor-mensajes {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px 50px;
+        }
+
+        .mensaje-alerta {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
         .content {
             flex: 1;
             display: flex;
@@ -60,6 +86,18 @@
         <div class="logo-titulo">Sistema de Gestión de Turnos Médicos</div>
         <a href="{% url 'elegir_portal' %}" class="btn-iniciar">Iniciar sesión</a>
     </header>
+
+    <!-- 🚀 BLOQUE DE MENSAJES DE DJANGO AGREGADO AQUÍ -->
+    {% if messages %}
+        <div class="contenedor-mensajes">
+            {% for message in messages %}
+                <div class="mensaje-alerta">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
 
     <div class="content">
         </div>
