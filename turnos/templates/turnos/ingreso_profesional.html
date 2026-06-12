@@ -199,7 +199,7 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 <div class="grupo-campo">
-                    <label for="matricula" >Matrícula</label>
+                    <label for="matricula">Matrícula</label>
                     <input type="text" id="matricula" name="matricula" class="caja-entrada" required>
                 </div>
 
@@ -209,10 +209,16 @@
                         <input type="password" id="contrasena" name="contrasena" class="caja-entrada" style="padding-right: 45px;" required>
                         <span onclick="togglePassword('contrasena')" style="position: absolute; right: 12px; color: #000000; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">👁</span>
                     </div>
-                </div>             
-               
-                
+                </div>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <p style="color: white; font-size: 14px; margin-top: 10px;">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+
                 <button type="submit" class="btn-ingresar">Ingresar</button>
+                <a href="{% url 'recuperar_contrasena_profesional' %}" style="color: rgba(255,255,255,0.8); font-size: 14px; margin-top: 20px; display: block;">Olvidé mi contraseña</a>
             </form>
         </div>
 

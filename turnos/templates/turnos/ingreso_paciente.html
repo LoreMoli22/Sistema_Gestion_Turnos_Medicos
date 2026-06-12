@@ -194,14 +194,11 @@
         <div class="tarjeta-azul">
             <h2>Ingreso al Portal Paciente</h2>
             <form action="" method="POST">
-                 {% csrf_token %}
+                {% csrf_token %}
                 <div class="grupo-campo">
                     <label for="dni">DNI</label>
                     <input type="text" id="dni" name="dni" class="caja-entrada" required>
                 </div>
-
-
-                                
                 <div class="grupo-campo">
                     <label for="contrasena">Contraseña</label>
                     <div style="position: relative; width: 100%;">
@@ -209,10 +206,11 @@
                         <span onclick="togglePassword('contrasena')" style="position: absolute; right: 12px; color: #000000; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">👁</span>
                     </div>
                 </div>
-
-                
                 <button type="submit" class="btn-ingresar">Ingresar</button>
+                <a href="{% url 'recuperar_contrasena_profesional' %}" style="color: rgba(255,255,255,0.8); font-size: 14px; margin-top: 20px; display: block;">Olvidé mi contraseña</a>
+            
             </form>
+
         </div>
 
         <div class="seccion-registracion">

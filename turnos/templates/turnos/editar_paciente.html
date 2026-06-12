@@ -88,11 +88,27 @@
                 <input type="email" name="email" value="{{ paciente.email }}" class="caja-entrada" required>
             </div>
 
+            <div class="fila-campo">
+                <div class="etiqueta-caja">Nueva contraseña</div>
+                <div style="position: relative; flex: 1;">
+                    <input type="password" id="nueva_contrasena" name="nueva_contrasena" class="caja-entrada" style="width: 100%; padding-right: 45px;" placeholder="Dejar vacío para no cambiar">
+                    <span onclick="togglePassword('nueva_contrasena')" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">👁</span>
+                </div>
+            </div>
+
             <button type="submit" class="btn-accion btn-guardar">Guardar cambios</button>
             <a href="{% url 'lista_turnos' %}" class="btn-accion btn-cancelar">Cancelar</a>
 
+            
         </form>
     </div>
+
+        <script>
+    function togglePassword(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+    </script>
 
 </body>
 </html>

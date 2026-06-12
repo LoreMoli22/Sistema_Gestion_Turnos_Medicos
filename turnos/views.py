@@ -213,11 +213,15 @@ def editar_paciente(request):
         paciente.nombre = request.POST.get('nombre')
         paciente.apellido = request.POST.get('apellido')
         paciente.email = request.POST.get('email')
+        nueva_contrasena = request.POST.get('nueva_contrasena')
+        if nueva_contrasena:
+            paciente.contrasena = make_password(nueva_contrasena)
         paciente.save()
         messages.success(request, "Datos actualizados correctamente.")
         return redirect('lista_turnos')
 
     return render(request, 'turnos/editar_paciente.html', {'paciente': paciente})
+
 
 
 def editar_profesional(request):
@@ -232,6 +236,9 @@ def editar_profesional(request):
         profesional.apellido = request.POST.get('apellido')
         profesional.especialidad = request.POST.get('especialidad')
         profesional.email = request.POST.get('email')  
+        nueva_contrasena = request.POST.get('nueva_contrasena')
+        if nueva_contrasena:
+            profesional.contrasena = make_password(nueva_contrasena)
         profesional.save()
         messages.success(request, "Datos actualizados correctamente.")
         return redirect('lista_turnos_profesional')
@@ -262,3 +269,49 @@ def baja_profesional(request):
     return redirect('inicio')
 
 
+import random
+import string
+from django.core.mail import send_mail
+
+def recuperar_contrasena_paciente(request):
+    if request.method == 'POST':
+        dni = request.POST.get('dni')
+        try:
+            paciente = Paciente.objects.get(dni=dni)
+            nueva_contrasena = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+            paciente.contrasena = make_password(nueva_contrasena)
+            paciente.save()
+            send_mail(
+                'Recuperacion de contrasena - Turnos Medicos',
+                f'Tu nueva contrasena temporal es: {nueva_contrasena}\nPor favor cambiala desde Editar Perfil.',
+                'lore22laplata@gmail.com',
+                [paciente.email],
+                fail_silently=False,
+            )
+            messages.success(request, "Te enviamos una contrasena temporal a tu email.")
+            return redirect('ingreso_paciente')
+        except Paciente.DoesNotExist:
+            messages.error(request, "No existe un paciente con ese DNI.")
+    return render(request, 'turnos/recuperar_contrasena_paciente.html')
+
+
+def recuperar_contrasena_profesional(request):
+    if request.method == 'POST':
+        matricula = request.POST.get('matricula')
+        try:
+            profesional = Profesional.objects.get(matricula=matricula)
+            nueva_contrasena = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+            profesional.contrasena = make_password(nueva_contrasena)
+            profesional.save()
+            send_mail(
+                'Recuperacion de contrasena - Turnos Medicos',
+                f'Tu nueva contrasena temporal es: {nueva_contrasena}\nPor favor cambiala desde Editar Perfil.',
+                'lore22laplata@gmail.com',
+                [profesional.email],
+                fail_silently=False,
+            )
+            messages.success(request, "Te enviamos una contrasena temporal a tu email.")
+            return redirect('ingreso_profesional')
+        except Profesional.DoesNotExist:
+            messages.error(request, "No existe un profesional con esa matricula.")
+    return render(request, 'turnos/recuperar_contrasena_profesional.html')

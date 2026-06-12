@@ -34,7 +34,11 @@ urlpatterns = [
     path('baja-paciente/', views.baja_paciente, name='baja_paciente'),
     
     path('baja-profesional/', views.baja_profesional, name='baja_profesional'),
-    
+      
+    path('recuperar-contrasena-paciente/', views.recuperar_contrasena_paciente, name='recuperar_contrasena_paciente'),
+
+    path('recuperar-contrasena-profesional/', views.recuperar_contrasena_profesional, name='recuperar_contrasena_profesional'),
+
     
 ]
 
