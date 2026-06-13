@@ -36,14 +36,14 @@
     <div class="contenedor-principal">
         <div class="tarjeta-azul">
             <h2>Recuperar Contraseña</h2>
-            <p>Ingresá tu DNI y te enviaremos una contraseña temporal a tu email.</p>
+            <p>Ingresá tu DNI y te enviaremos una contraseña a tu email.</p>
             <form action="{% url 'recuperar_contrasena_paciente' %}" method="POST">
                 {% csrf_token %}
                 <div class="grupo-campo">
                     <label for="dni">DNI</label>
                     <input type="text" id="dni" name="dni" class="caja-entrada" required>
                 </div>
-                <button type="submit" class="btn-enviar">Enviar contraseña temporal</button>
+                <button type="submit" class="btn-enviar">Enviar contraseña </button>
             </form>
             <a href="{% url 'ingreso_paciente' %}" class="btn-volver">Volver al ingreso</a>
         </div>

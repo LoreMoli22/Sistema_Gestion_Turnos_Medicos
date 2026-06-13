@@ -285,12 +285,12 @@ def recuperar_contrasena_paciente(request):
                     "from": "onboarding@resend.dev",
                     "to": paciente.email,
                     "subject": "Recuperacion de contrasena - Turnos Medicos",
-                    "html": f"<p>Tu nueva contrasena temporal es: <strong>{nueva_contrasena}</strong></p><p>Por favor cambiala desde Editar Perfil.</p>"
+                    "html": f"<p>Tu nueva contrasena es: <strong>{nueva_contrasena}</strong></p><p>Por favor cambiala desde Editar Perfil.</p>"
                 })
             except Exception as e:
                 print(f"Error en Resend Paciente: {e}")
             
-            messages.success(request, "Te enviamos una contrasena temporal a tu email.")
+            messages.success(request, "Te enviamos una contrasena a tu email.")
             return redirect('ingreso_paciente')
         except Paciente.DoesNotExist:
             messages.error(request, "No existe un paciente con ese DNI.")
@@ -314,12 +314,12 @@ def recuperar_contrasena_profesional(request):
                     "from": "onboarding@resend.dev",
                     "to": profesional.email,
                     "subject": "Recuperacion de contrasena - Turnos Medicos",
-                    "html": f"<p>Tu nueva contrasena temporal es: <strong>{nueva_contrasena}</strong></p><p>Por favor cambiala desde Editar Perfil.</p>"
+                    "html": f"<p>Tu nueva contrasena es: <strong>{nueva_contrasena}</strong></p><p>Por favor cambiala desde Editar Perfil.</p>"
                 })
             except Exception as e:
                 print(f"Error en Resend Profesional: {e}")
                 
-            messages.success(request, "Te enviamos una contrasena temporal.")
+            messages.success(request, "Te enviamos una contrasena.")
             return redirect('ingreso_profesional')
         except Profesional.DoesNotExist:
             messages.error(request, "No existe un profesional con esa matricula.")
