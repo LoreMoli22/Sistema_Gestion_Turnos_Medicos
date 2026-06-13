@@ -1,9 +1,12 @@
 
+import random
+import string
+
 from django.shortcuts import render, redirect  
 from django.contrib import messages             
 from .models import Turno, Profesional, Paciente 
 from django.contrib.auth.hashers import make_password, check_password
-
+from django.core.mail import send_mail
 
 
 def lista_turnos(request):
@@ -269,9 +272,7 @@ def baja_profesional(request):
     return redirect('inicio')
 
 
-import random
-import string
-from django.core.mail import send_mail
+
 
 def recuperar_contrasena_paciente(request):
     if request.method == 'POST':
@@ -279,8 +280,11 @@ def recuperar_contrasena_paciente(request):
         try:
             paciente = Paciente.objects.get(dni=dni)
             nueva_contrasena = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+            
+            # Aseguramos que guarde encriptado igual que el profesional
             paciente.contrasena = make_password(nueva_contrasena)
             paciente.save()
+            
             send_mail(
                 'Recuperacion de contrasena - Turnos Medicos',
                 f'Tu nueva contrasena temporal es: {nueva_contrasena}\nPor favor cambiala desde Editar Perfil.',
@@ -294,15 +298,17 @@ def recuperar_contrasena_paciente(request):
             messages.error(request, "No existe un paciente con ese DNI.")
     return render(request, 'turnos/recuperar_contrasena_paciente.html')
 
-
 def recuperar_contrasena_profesional(request):
     if request.method == 'POST':
         matricula = request.POST.get('matricula')
         try:
             profesional = Profesional.objects.get(matricula=matricula)
             nueva_contrasena = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+            
+            # Forzamos el encriptado acá en la vista para asegurar que el login la lea bien
             profesional.contrasena = make_password(nueva_contrasena)
             profesional.save()
+            
             send_mail(
                 'Recuperacion de contrasena - Turnos Medicos',
                 f'Tu nueva contrasena temporal es: {nueva_contrasena}\nPor favor cambiala desde Editar Perfil.',
@@ -310,7 +316,7 @@ def recuperar_contrasena_profesional(request):
                 [profesional.email],
                 fail_silently=False,
             )
-            messages.success(request, "Te enviamos una contrasena temporal a tu email.")
+            messages.success(request, "Te enviamos una contrasena temporal.")
             return redirect('ingreso_profesional')
         except Profesional.DoesNotExist:
             messages.error(request, "No existe un profesional con esa matricula.")
