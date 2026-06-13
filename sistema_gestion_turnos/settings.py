@@ -145,13 +145,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 import os
 
-EMAIL_BACKEND = 'django.core.mail.backends.locmen.EmailBackend'
-##########EMAIL_HOST = 'smtp.gmail.com'
-##########EMAIL_PORT = 465
-EMAIL_USE_TLS = False
-##########EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'lore22laplata@gmail.com'
-DEFAULT_FROM_EMAIL = 'lore22laplata@gmail.com'
-
-# Seguridad para Railway: leemos la contraseña desde el entorno
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+# ==========================
+# CONFIGURACIÓN DE CORREO CON RESEND API
+# ==========================
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
+DEFAULT_FROM_EMAIL = 'onboarding@resend.dev'

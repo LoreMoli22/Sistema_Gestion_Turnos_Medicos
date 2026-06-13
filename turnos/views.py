@@ -1,12 +1,13 @@
-
 import random
 import string
+import resend  # 👈 Agregado correctamente acá arriba
 
 from django.shortcuts import render, redirect  
 from django.contrib import messages             
 from .models import Turno, Profesional, Paciente 
 from django.contrib.auth.hashers import make_password, check_password
 from django.core.mail import send_mail
+from django.conf import settings  # 👈 Agregado correctamente acá arriba
 
 
 def lista_turnos(request):
@@ -26,13 +27,11 @@ def elegir_portal(request):
     return render(request, 'turnos/eleccion_portal.html')
 
 
-
 def ingreso_paciente(request):
     if request.method == 'POST':
         dni = request.POST.get('dni')
         contrasena = request.POST.get('contrasena')
     
-
         try:
             paciente = Paciente.objects.get(dni=dni)
             if check_password(contrasena, paciente.contrasena):
@@ -81,7 +80,6 @@ def registro_profesional(request):
             messages.error(request, "Esta matrícula ya se encuentra registrada.")
             return render(request, 'turnos/registro_profesional.html')
 
-        
         nuevo_profesional = Profesional(
             nombre=nombre,
             apellido=apellido,
@@ -181,14 +179,12 @@ def lista_turnos_profesional(request):
 
 
 def cambiar_estado_turno(request, turno_id):
-    # Verifica que sea el profesional quien hace el cambio
     if not request.session.get('profesional_id'):
         return redirect('ingreso_profesional')
 
     if request.method == 'POST':
         nuevo_estado = request.POST.get('estado')
         try:
-            # Busca el turno específico por su ID
             turno = Turno.objects.get(id=turno_id)
             turno.estado = nuevo_estado
             turno.save()
@@ -197,7 +193,6 @@ def cambiar_estado_turno(request, turno_id):
             messages.error(request, "El turno no existe.")
 
     return redirect('lista_turnos_profesional')
-
 
 
 def cerrar_sesion(request):
@@ -224,7 +219,6 @@ def editar_paciente(request):
         return redirect('lista_turnos')
 
     return render(request, 'turnos/editar_paciente.html', {'paciente': paciente})
-
 
 
 def editar_profesional(request):
@@ -272,7 +266,9 @@ def baja_profesional(request):
     return redirect('inicio')
 
 
-
+# ==========================================
+# VISTAS DE RECUPERACIÓN MODIFICADAS CON RESEND
+# ==========================================
 
 def recuperar_contrasena_paciente(request):
     if request.method == 'POST':
@@ -281,22 +277,27 @@ def recuperar_contrasena_paciente(request):
             paciente = Paciente.objects.get(dni=dni)
             nueva_contrasena = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
             
-            # Aseguramos que guarde encriptado igual que el profesional
             paciente.contrasena = make_password(nueva_contrasena)
             paciente.save()
             
-            send_mail(
-                'Recuperacion de contrasena - Turnos Medicos',
-                f'Tu nueva contrasena temporal es: {nueva_contrasena}\nPor favor cambiala desde Editar Perfil.',
-                'lore22laplata@gmail.com',
-                [paciente.email],
-                fail_silently=True,
-            )
+            # Envío seguro con Resend API
+            resend.api_key = settings.RESEND_API_KEY
+            try:
+                resend.Emails.send({
+                    "from": "onboarding@resend.dev",
+                    "to": paciente.email,
+                    "subject": "Recuperacion de contrasena - Turnos Medicos",
+                    "html": f"<p>Tu nueva contrasena temporal es: <strong>{nueva_contrasena}</strong></p><p>Por favor cambiala desde Editar Perfil.</p>"
+                })
+            except Exception as e:
+                print(f"Error en Resend Paciente: {e}")
+            
             messages.success(request, "Te enviamos una contrasena temporal a tu email.")
             return redirect('ingreso_paciente')
         except Paciente.DoesNotExist:
             messages.error(request, "No existe un paciente con ese DNI.")
     return render(request, 'turnos/recuperar_contrasena_paciente.html')
+
 
 def recuperar_contrasena_profesional(request):
     if request.method == 'POST':
@@ -305,17 +306,21 @@ def recuperar_contrasena_profesional(request):
             profesional = Profesional.objects.get(matricula=matricula)
             nueva_contrasena = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
             
-            # Forzamos el encriptado acá en la vista para asegurar que el login la lea bien
             profesional.contrasena = make_password(nueva_contrasena)
             profesional.save()
             
-            send_mail(
-                'Recuperacion de contrasena - Turnos Medicos',
-                f'Tu nueva contrasena temporal es: {nueva_contrasena}\nPor favor cambiala desde Editar Perfil.',
-                'lore22laplata@gmail.com',
-                [profesional.email],
-                fail_silently=True,
-            )
+            # Envío seguro con Resend API
+            resend.api_key = settings.RESEND_API_KEY
+            try:
+                resend.Emails.send({
+                    "from": "onboarding@resend.dev",
+                    "to": profesional.email,
+                    "subject": "Recuperacion de contrasena - Turnos Medicos",
+                    "html": f"<p>Tu nueva contrasena temporal es: <strong>{nueva_contrasena}</strong></p><p>Por favor cambiala desde Editar Perfil.</p>"
+                })
+            except Exception as e:
+                print(f"Error en Resend Profesional: {e}")
+                
             messages.success(request, "Te enviamos una contrasena temporal.")
             return redirect('ingreso_profesional')
         except Profesional.DoesNotExist:
