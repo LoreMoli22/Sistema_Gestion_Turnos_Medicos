@@ -290,7 +290,7 @@ def recuperar_contrasena_paciente(request):
                 f'Tu nueva contrasena temporal es: {nueva_contrasena}\nPor favor cambiala desde Editar Perfil.',
                 'lore22laplata@gmail.com',
                 [paciente.email],
-                fail_silently=False,
+                fail_silently=True,
             )
             messages.success(request, "Te enviamos una contrasena temporal a tu email.")
             return redirect('ingreso_paciente')
@@ -314,7 +314,7 @@ def recuperar_contrasena_profesional(request):
                 f'Tu nueva contrasena temporal es: {nueva_contrasena}\nPor favor cambiala desde Editar Perfil.',
                 'lore22laplata@gmail.com',
                 [profesional.email],
-                fail_silently=False,
+                fail_silently=True,
             )
             messages.success(request, "Te enviamos una contrasena temporal.")
             return redirect('ingreso_profesional')
