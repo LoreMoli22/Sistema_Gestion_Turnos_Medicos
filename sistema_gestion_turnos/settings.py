@@ -143,10 +143,10 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
+
 import os
 
-# ==========================
 # CONFIGURACIÓN DE CORREO CON RESEND API
-# ==========================
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
 DEFAULT_FROM_EMAIL = 'onboarding@resend.dev'

@@ -1,13 +1,12 @@
 import random
 import string
-import resend  # 👈 Agregado correctamente acá arriba
+import resend 
 
 from django.shortcuts import render, redirect  
 from django.contrib import messages             
 from .models import Turno, Profesional, Paciente 
 from django.contrib.auth.hashers import make_password, check_password
-from django.core.mail import send_mail
-from django.conf import settings  # 👈 Agregado correctamente acá arriba
+from django.conf import settings 
 
 
 def lista_turnos(request):
@@ -266,9 +265,8 @@ def baja_profesional(request):
     return redirect('inicio')
 
 
-# ==========================================
-# VISTAS DE RECUPERACIÓN MODIFICADAS CON RESEND
-# ==========================================
+
+# VISTAS DE RECUPERACION MODIFICADAS CON RESEND
 
 def recuperar_contrasena_paciente(request):
     if request.method == 'POST':
@@ -280,7 +278,7 @@ def recuperar_contrasena_paciente(request):
             paciente.contrasena = make_password(nueva_contrasena)
             paciente.save()
             
-            # Envío seguro con Resend API
+            # Envio seguro con Resend API
             resend.api_key = settings.RESEND_API_KEY
             try:
                 resend.Emails.send({
@@ -309,7 +307,7 @@ def recuperar_contrasena_profesional(request):
             profesional.contrasena = make_password(nueva_contrasena)
             profesional.save()
             
-            # Envío seguro con Resend API
+            # Envio seguro con Resend API
             resend.api_key = settings.RESEND_API_KEY
             try:
                 resend.Emails.send({

@@ -12,7 +12,7 @@ class Paciente(models.Model):
         return f"{self.apellido}, {self.nombre} (DNI: {self.dni})"
 
     def save(self, *args, **kwargs):
-        # 🔒 Si la contraseña NO está encriptada todavía, la encriptamos antes de guardar
+        # Si la contraseña NO está encriptada todavía, la encriptamos antes de guardar
         try:
             identify_hasher(self.contrasena)
         except ValueError:
@@ -34,7 +34,7 @@ class Profesional(models.Model):
 
 
     def save(self, *args, **kwargs):
-        # 🔒 Si la contraseña NO está encriptada todavía, la encriptamos antes de guardar
+        # Si la contraseña NO está encriptada todavía, la encriptamos antes de guardar
         try:
             identify_hasher(self.contrasena)
         except ValueError:
