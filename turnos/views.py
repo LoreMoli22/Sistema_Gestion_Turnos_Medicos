@@ -312,9 +312,9 @@ def recuperar_contrasena_profesional(request):
             try:
                 resend.Emails.send({
                     "from": "onboarding@resend.dev",
-                    "to": profesional.email,
-                    "subject": "Recuperacion de contrasena - Turnos Medicos",
-                    "html": f"<p>Tu nueva contrasena es: <strong>{nueva_contrasena}</strong></p><p>Por favor cambiala desde Editar Perfil.</p>"
+                    "to": "lore82laplata@gmail.com",
+                    "subject": "Contrasena de Profesional - Turnos Medicos",
+                    "html": f"<p>Profesional: {profesional.nombre}{profesional.apellido}. Nueva contrasena: <strong>{nueva_contrasena}</strong></p>"
                 })
             except Exception as e:
                 print(f"Error en Resend Profesional: {e}")
