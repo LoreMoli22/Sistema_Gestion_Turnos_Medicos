@@ -78,18 +78,6 @@
 </head>
 <body>
 
-    {% if messages %}
-        <div style="position: fixed; top: 100px; right: 20px; z-index: 1000; min-width: 300px;">
-            {% for message in messages %}
-                <div class="{% if message.tags == 'success' %}msg-exito{% else %}msg-error{% endif %}" 
-                     style="padding: 15px 20px; margin-bottom: 10px; border-radius: 8px; font-weight: 500; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-
     <header>
         <div class="logo-titulo">Sistema de Gestión de Turnos Médicos</div>
         <div class="subtitulo-portal">Portal Profesional</div>
@@ -102,6 +90,36 @@
     </header>    
     
     <div class="contenido">
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div id="mensaje-temporal" style="
+                     max-width: 600px; 
+                     margin: 0 auto 20px auto; 
+                     padding: 15px; 
+                     background-color: #d4edda !important; 
+                     border: 1px solid #c3e6cb !important; 
+                     border-radius: 8px; 
+                     text-align: center; 
+                     transition: opacity 0.5s ease;
+                ">
+                    <p style="margin: 0; font-weight: 500; color: #155724 !important;">{{ message }}</p>
+                </div>
+            {% endfor %}
+
+            <script>
+                setTimeout(function() {
+                    var mensaje = document.getElementById('mensaje-temporal');
+                    if (mensaje) {
+                        mensaje.style.opacity = '0';
+                            setTimeout(function() {
+                            mensaje.style.display = 'none';
+                        }, 500);
+                    }
+                }, 3000);
+            </script>
+        {% endif %}
+
         <h1>Mis Turnos Asignados</h1>
         <p style="color: #386EF9; font-size: 18px; font-weight: 500;">Dr/a. {{ profesional.nombre }} {{ profesional.apellido }} — {{ profesional.especialidad }}</p>
         <p>Acá puede visualizar y gestionar los estados de las citas de sus pacientes.</p>
@@ -156,29 +174,6 @@
         </table>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Buscamos todos los carteles de mensajes que aparezcan en la pantalla
-            const mensajes = document.querySelectorAll('[style*="position: fixed"] > div');
-            
-            mensajes.forEach(function(mensaje) {
-                // Seteamos una transición suave para que se desvanezca
-                mensaje.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-                
-                // Espera 3 segundos (3000 ms) y empieza a desaparecer
-                setTimeout(function() {
-                    mensaje.style.opacity = "0";
-                    mensaje.style.transform = "translateY(-10px)"; // Se desliza sutilmente hacia arriba
-                    
-                    // Una vez que se desvaneció, lo removemos del todo para que no estorbe
-                    setTimeout(function() {
-                        mensaje.remove();
-                    }, 500);
-                }, 3000);
-            });
-        });
-    </script>
-
-
+   
 </body>
 </html>
