@@ -26,13 +26,16 @@ Este es un proyecto desarrollado en **Django** y **Python** para la gestión int
 
 ### Estructura del proyecto
 
-La lógica del sistema está organizada de la siguiente manera:
+La lógica del sistema está centralizada en la aplicación `turnos`, organizada de la siguiente manera:
 
-- `/sistema_gestion_turnos/`: Configuración principal y archivos del proyecto (settings, urls).
-- `/pacientes/`: Lógica, vistas y modelos específicos para el portal paciente.
-- `/profesionales/`: Lógica, vistas y modelos específicos para el portal profesional.
-- `/templates/`: Archivos HTML base y específicos de cada portal.
-
+- `/sistema_gestion_turnos/`: Configuración principal del proyecto (settings, urls, wsgi).
+- `/turnos/`: Aplicación principal que contiene:
+    - `models.py`, `views.py`, `admin.py`: Lógica central, modelos y vistas para ambos portales.
+    - `/templates/turnos/`: Todos los archivos HTML de las interfaces (paciente y profesional).
+    - `/migrations/`: Historial de cambios en la base de datos.
+- `/static/` y `/staticfiles/`: Archivos estáticos del proyecto.
+- `manage.py`: Script de gestión de Django.
+- `requirements.txt`: Dependencias necesarias para ejecutar el sistema.
 ---
 
 ### Instalación y Ejecución Local:
