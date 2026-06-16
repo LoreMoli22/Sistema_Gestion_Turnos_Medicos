@@ -290,7 +290,7 @@ def recuperar_contrasena_paciente(request):
             except Exception as e:
                 print(f"Error en Resend Paciente: {e}")
             
-            messages.success(request, "Te enviamos una contrasena a tu email.")
+            messages.success(request, "Enviaremos una nueva contraseña.")
             return redirect('ingreso_paciente')
         except Paciente.DoesNotExist:
             messages.error(request, "No existe un paciente con ese DNI.")
@@ -319,7 +319,7 @@ def recuperar_contrasena_profesional(request):
             except Exception as e:
                 print(f"Error en Resend Profesional: {e}")
                 
-            messages.success(request, "Te enviamos una contrasena.")
+            messages.success(request, "Enviaremos una nueva contraseña.")
             return redirect('ingreso_profesional')
         except Profesional.DoesNotExist:
             messages.error(request, "No existe un profesional con esa matricula.")
