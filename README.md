@@ -24,6 +24,15 @@ Este es un proyecto desarrollado en **Django** y **Python** para la gestión int
 - Cambio de estado del turno: Pendiente, Confirmado, Cancelado, Realizado
 - Contraseñas encriptadas con hasheo seguro
 
+### Estructura del proyecto
+
+La lógica del sistema está organizada de la siguiente manera:
+
+- `/sistema_gestion_turnos/`: Configuración principal y archivos del proyecto (settings, urls).
+- `/pacientes/`: Lógica, vistas y modelos específicos para el portal paciente.
+- `/profesionales/`: Lógica, vistas y modelos específicos para el portal profesional.
+- `/templates/`: Archivos HTML base y específicos de cada portal.
+
 ---
 
 ### Instalación y Ejecución Local:
@@ -48,7 +57,7 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 3. **Instalar dependencias:**
 
     ### PowerShell
-    pip install -r requirements.tx
+    pip install -r requirements.txt
 
 
 4. **Aplicar las migraciones:**
@@ -91,4 +100,4 @@ El sistema cuenta con dos entornos independientes:
 - URL: https://sistemagestionturnosmedicos-production.up.railway.app/
 - Base de datos: PostgreSQL en Railway
 - Accesible desde cualquier navegador
-- Los datos de ambos entornos son independientes y no se cruzan
+- Los datos de ambos entornos son independientes y no se cruzan.
