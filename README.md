@@ -42,10 +42,10 @@ La lógica del sistema está centralizada en la aplicación `turnos`, organizada
 
 Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 
-1. **Clonar el repositorio:**
-   
-   ### En Windows (PowerShell)
+  
+### En Windows (PowerShell)
 
+1. **Clonar el repositorio:**
     git clone https://github.com/LoreMoli22/Sistema_Gestion_Turnos_Medicos.git
 
     cd Sistema_Gestion_Turnos_Medicos
@@ -75,7 +75,7 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 
 ### Luego, ingresá a http://127.0.0.1:8000/ en tu navegador. Para acceder al panel administrador, usá http://127.0.0.1:8000/admin.
 
-    ### En Linux/Debian
+### En Linux/Debian
 
 1. Instalar los paquetes necesarios (si no los tenés):  
 
