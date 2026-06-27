@@ -85,26 +85,27 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 2. Clonar el repositorio:
 
     git clone https://github.com/LoreMoli22/Sistema_Gestion_Turnos_Medicos.git
+   
     cd Sistema_Gestion_Turnos_Medicos
 
-3. Crear y activar el entorno virtual:
+4. Crear y activar el entorno virtual:
 
     python3 -m venv venv
     source venv/bin/activate
 
-4. Instalar dependenciads:
+5. Instalar dependenciads:
 
     pip install -r requirements.txt
 
-5. Aplicar las migraciones:
+6. Aplicar las migraciones:
 
     python3 manage.py 
     
-6. Iniciar el servidor de desarrollo:
+7. Iniciar el servidor de desarrollo:
 
     python3 manage.py runserver
 
-7. Para salir del entorno virtual cuando termines:
+8. Para salir del entorno virtual cuando termines:
 
     deactivate
 
