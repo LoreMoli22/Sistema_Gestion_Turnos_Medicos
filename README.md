@@ -44,7 +44,7 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 
 1. **Clonar el repositorio:**
    
-   ### PowerShell
+   ### En Windows (PowerShell)
 
     git clone https://github.com/LoreMoli22/Sistema_Gestion_Turnos_Medicos.git
 
@@ -72,6 +72,41 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 
     ### PowerShell
     python manage.py runserver
+
+### Luego, ingresá a http://127.0.0.1:8000/ en tu navegador. Para acceder al panel administrador, usá http://127.0.0.1:8000/admin.
+
+    ### En Linux/Debian
+
+1. Instalar los paquetes necesarios (si no los tenés):  
+
+    sudo apt update
+    sudo apt install python3 python3-venv python3-pip git -y
+
+2. Clonar el repositorio:
+
+    git clone https://github.com/LoreMoli22/Sistema_Gestion_Turnos_Medicos.git
+    cd Sistema_Gestion_Turnos_Medicos
+
+3. Crear y activar el entorno virtual:
+
+    python3 -m venv venv
+    source venv/bin/activate
+
+4. Instalar dependenciads:
+
+    pip install -r requirements.txt
+
+5. Aplicar las migraciones:
+
+    python3 manage.py 
+    
+6. Iniciar el servidor de desarrollo:
+
+    python3 manage.py runserver
+
+7. Para salir del entorno virtual cuando termines:
+
+    deactivate
 
 ### Luego, ingresá a http://127.0.0.1:8000/ en tu navegador. Para acceder al panel administrador, usá http://127.0.0.1:8000/admin.
 
