@@ -91,21 +91,22 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 4. Crear y activar el entorno virtual:
 
     python3 -m venv venv
+   
     source venv/bin/activate
 
-5. Instalar dependenciads:
+6. Instalar dependenciads:
 
     pip install -r requirements.txt
 
-6. Aplicar las migraciones:
+7. Aplicar las migraciones:
 
     python3 manage.py 
     
-7. Iniciar el servidor de desarrollo:
+8. Iniciar el servidor de desarrollo:
 
     python3 manage.py runserver
 
-8. Para salir del entorno virtual cuando termines:
+9. Para salir del entorno virtual cuando termines:
 
     deactivate
 
