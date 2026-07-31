@@ -124,12 +124,6 @@ El sistema está disponible en:
 Acceso al panel de administración (solo para administradores):
 [https://sistema-gestion-turnos-medicos.onrender.com/admin/](https://sistema-gestion-turnos-medicos.onrender.com/admin/)
 
-
-### Panel de Administración
-
-Acceso al panel de administración (solo para administradores):
-https://sistemagestionturnosmedicos-production.up.railway.app/admin/
-
 ---
 
 ### Entornos del sistema
