@@ -117,7 +117,12 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 ### Sistema en línea (Deploy)
 
 El sistema está disponible en:
-https://sistemagestionturnosmedicos-production.up.railway.app
+[https://sistema-gestion-turnos-medicos.onrender.com](https://sistema-gestion-turnos-medicos.onrender.com)
+
+### Panel de Administración
+
+Acceso al panel de administración (solo para administradores):
+[https://sistema-gestion-turnos-medicos.onrender.com/admin/](https://sistema-gestion-turnos-medicos.onrender.com/admin/)
 
 
 ### Panel de Administración
@@ -136,8 +141,8 @@ El sistema cuenta con dos entornos independientes:
 - Base de datos: SQLite (archivo db.sqlite3 local)
 - Solo accesible desde la computadora de desarrollo
 
-**Entorno producción (Railway)**
-- URL: https://sistemagestionturnosmedicos-production.up.railway.app/
-- Base de datos: PostgreSQL en Railway
+**Entorno producción (Render)**
+- URL: https://sistema-gestion-turnos-medicos.onrender.com
+- Base de datos: PostgreSQL en Render
 - Accesible desde cualquier navegador
 - Los datos de ambos entornos son independientes y no se cruzan.
