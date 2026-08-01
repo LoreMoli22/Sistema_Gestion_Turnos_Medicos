@@ -59,7 +59,7 @@
             align-items: center;
             gap: 15px;
             width: 100%;
-            max-width: 500px;
+            max-width: 520px;
         }
 
         .fila-campo {
@@ -89,7 +89,29 @@
             font-size: 16px;
             flex: 1;
             outline: none;
-            color: #333333;
+            color: #000000;
+            font-weight: 500;
+        }
+
+        /* Estilo para los turnos ocupados en el select (en rojo y deshabilitados) */
+        .caja-entrada option:disabled {
+            color: #D32F2F !important;
+            background-color: #FFEBEE !important;
+            font-style: italic;
+        }
+
+        .contenedor-input-aviso {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .texto-aviso {
+            font-size: 12px;
+            color: #000000; /* Letra en negro como pediste */
+            font-style: italic;
+            font-weight: 500;
         }
 
         .btn-accion {
@@ -130,12 +152,20 @@
     </header>
 
     <div class="contenedor-formulario">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger" style="color: red; text-align: center; margin-bottom: 15px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
         <form action="{% url 'solicitar_turno' %}" method="POST">
             {% csrf_token %}
 
             <div class="fila-campo">
                 <div class="etiqueta-caja">Profesional</div>
-                <select name="profesional" class="caja-entrada" required>
+                <select name="profesional" id="select-profesional" class="caja-entrada" required>
                     <option value="">-- Seleccioná un profesional --</option>
                     {% for p in profesionales %}
                         <option value="{{ p.id }}">Dr/a. {{ p.apellido }}, {{ p.nombre }} ({{ p.especialidad }})</option>
@@ -145,12 +175,34 @@
 
             <div class="fila-campo">
                 <div class="etiqueta-caja">Fecha</div>
-                <input type="date" name="fecha" class="caja-entrada" required>
+                <div class="contenedor-input-aviso">
+                    <input type="date" name="fecha" id="input-fecha" class="caja-entrada" required>
+                    <span class="texto-aviso">Atención de lunes a viernes (fines de semana no laborables).</span>
+                </div>
             </div>
 
             <div class="fila-campo">
                 <div class="etiqueta-caja">Hora</div>
-                <input type="time" name="hora" class="caja-entrada" required>
+                <select name="hora" id="select-hora" class="caja-entrada" required>
+                    <option value="">-- Seleccioná un horario --</option>
+                    <option value="08:00">08:00 hs</option>
+                    <option value="08:30">08:30 hs</option>
+                    <option value="09:00">09:00 hs</option>
+                    <option value="09:30">09:30 hs</option>
+                    <option value="10:00">10:00 hs</option>
+                    <option value="10:30">10:30 hs</option>
+                    <option value="11:00">11:00 hs</option>
+                    <option value="11:30">11:30 hs</option>
+                    <option value="12:00">12:00 hs</option>
+                    <option value="12:30">12:30 hs</option>
+                    <option value="13:00">13:00 hs</option>
+                    <option value="13:30">13:30 hs</option>
+                    <option value="14:00">14:00 hs</option>
+                    <option value="14:30">14:30 hs</option>
+                    <option value="15:00">15:00 hs</option>
+                    <option value="15:30">15:30 hs</option>
+                    <option value="16:00">16:00 hs</option>
+                </select>
             </div>
 
             <div class="fila-campo">
@@ -164,5 +216,64 @@
         </form>
     </div>
 
+    <!-- Pasamos los turnos existentes desde Django -->
+    {{ turnos_existentes|json_script:"turnos-data" }}
+
+    <script>
+        // 1. Bloquear automáticamente las fechas pasadas en el calendario
+        const inputFecha = document.getElementById('input-fecha');
+        const hoy = new Date().toISOString().split('T')[0];
+        inputFecha.min = hoy;
+
+        // 2. Si detecta sábado o domingo, limpia el campo de forma silenciosa
+        inputFecha.addEventListener('input', function() {
+            const fechaSeleccionada = new Date(this.value + 'T00:00:00');
+            const diaSemana = fechaSeleccionada.getDay(); // 0: Domingo, 6: Sábado
+            if (diaSemana === 0 || diaSemana === 6) {
+                this.value = ""; 
+            }
+            verificarTurnosOcupados();
+        });
+
+        const selectProfesional = document.getElementById('select-profesional');
+        const selectHora = document.getElementById('select-hora');
+        const turnosOcupados = JSON.parse(document.getElementById('turnos-data').textContent);
+
+        // Guardamos las opciones originales de hora
+        const opcionesHoraOriginales = selectHora.innerHTML;
+
+        function verificarTurnosOcupados() {
+            const profId = selectProfesional.value;
+            const fechaVal = inputFecha.value;
+
+            // Restauramos las opciones originales primero
+            selectHora.innerHTML = opcionesHoraOriginales;
+
+            if (!profId || !fechaVal) {
+                return;
+            }
+
+            // Recorremos cada opción del select de horas
+            for (let i = 0; i < selectHora.options.length; i++) {
+                let option = selectHora.options[i];
+                let horaStr = option.value;
+
+                if (!horaStr) continue;
+
+                // Verificamos si este turno ya está ocupado para este profesional en esta fecha
+                let estaOcupado = turnosOcupados.some(t => 
+                    String(t.profesional_id) === String(profId) && t.fecha === fechaVal && t.hora === horaStr
+                );
+
+                if (estaOcupado) {
+                    option.disabled = true; 
+                    option.textContent = `${horaStr} hs [ OCUPADO ]`; 
+                }
+            }
+        }
+
+        selectProfesional.addEventListener('change', verificarTurnosOcupados);
+        inputFecha.addEventListener('change', verificarTurnosOcupados);
+    </script>
 </body>
 </html>

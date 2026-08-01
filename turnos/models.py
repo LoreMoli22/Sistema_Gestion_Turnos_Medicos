@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password, identify_hasher
+from django.core.exceptions import ValidationError
+
+
+
 
 class Paciente(models.Model):
     nombre = models.CharField(max_length=100)
@@ -8,10 +12,18 @@ class Paciente(models.Model):
     email = models.EmailField(unique=True)
     contrasena = models.CharField(max_length=255) # Para guardar la clave encriptada
 
-    def __str__(self):
-        return f"{self.apellido}, {self.nombre} (DNI: {self.dni})"
+    def clean(self):
+        super().clean()
+        if any (char.isdigit() for char in self.nombre):
+           raise ValidationError({'nombre': 'El nombre no puede contener números.'})
+        if any(char.isdigit() for char in self.apellido):
+            raise ValidationError({'apellido': 'El apellido no puede contener números.'}) 
+        if not self.dni.isdigit():
+            raise ValidationError({'dni': 'El DNI debe contener únicamente números.'})
+
 
     def save(self, *args, **kwargs):
+        self.full_clean()
         # Si la contraseña NO está encriptada todavía, la encriptamos antes de guardar
         try:
             identify_hasher(self.contrasena)
@@ -19,6 +31,9 @@ class Paciente(models.Model):
             self.contrasena = make_password(self.contrasena)
             
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.apellido}, {self.nombre} (DNI: {self.dni})"
 
 
 class Profesional(models.Model):
@@ -29,11 +44,22 @@ class Profesional(models.Model):
     email = models.EmailField(unique=True, null=True, blank=True)
     contrasena = models.CharField(max_length=255) # Para guardar la clave encriptada
 
+    def clean(self):
+        super().clean()
+        if any(char.isdigit() for char in self.nombre):
+            raise ValidationError({'nombre': 'El nombre no puede contener números.'})
+        if any(char.isdigit() for char in self.apellido):
+            raise ValidationError({'apellido': 'El apellido no puede contener números.'})
+        if not self.matricula.isdigit():
+            raise ValidationError({'matricula': 'La matrícula debe contener únicamente números (sin puntos ni guiones).'})
+
+
     def __str__(self):
         return f"Dr/a. {self.apellido}, {self.nombre} - M.P.: {self.matricula} ({self.especialidad})"
 
 
     def save(self, *args, **kwargs):
+        self.full_clean()
         # Si la contraseña NO está encriptada todavía, la encriptamos antes de guardar
         try:
             identify_hasher(self.contrasena)
@@ -59,6 +85,9 @@ class Turno(models.Model):
     hora = models.TimeField()
     motivo = models.TextField(blank=True, null=True)
     estado = models.CharField(max_length=20, choices=ESTADOS_CHOICES, default='PENDIENTE')
+
+    class Meta:
+        unique_together = ('profesional', 'fecha', 'hora')
 
     def __str__(self):
         return f"Turno: {self.fecha} {self.hora} - Paciente: {self.paciente.apellido} | Médico: {self.profesional.apellido}"

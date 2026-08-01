@@ -7,7 +7,7 @@ from django.contrib import messages
 from .models import Turno, Profesional, Paciente 
 from django.contrib.auth.hashers import make_password, check_password
 from django.conf import settings 
-
+from django.core.exceptions import ValidationError
 
 def lista_turnos(request):
     paciente_id = request.session.get('paciente_id')
@@ -87,8 +87,14 @@ def registro_profesional(request):
             email=email,
             contrasena=make_password(contrasena)
         )
-        nuevo_profesional.save()
 
+        try:
+            nuevo_profesional.save()
+        except ValidationError as e:
+            mensaje_error = e.message_dict.get('nombre') or e.message_dict.get('apellido') or e.message_dict.get('matricula') or "Error de validación."
+            messages.error(request, mensaje_error[0] if isinstance(mensaje_error, list) else mensaje_error)
+            return render(request, 'turnos/registro_profesional.html')
+        
         messages.success(request, "¡Registro de profesional exitoso!")
         return redirect('ingreso_profesional')
 
@@ -123,7 +129,13 @@ def registro_paciente(request):
             email=email,
             contrasena=make_password(contrasena)
         )
-        nuevo_paciente.save()
+        
+        try:
+            nuevo_paciente.save()
+        except ValidationError as e:
+            mensaje_error = e.message_dict.get('nombre') or e.message_dict.get('apellido') or e.message_dict.get('dni') or "Error de validación."
+            messages.error(request, mensaje_error[0] if isinstance(mensaje_error, list) else mensaje_error)
+            return render(request, 'turnos/registro_paciente.html')
 
         messages.success(request, "¡Registro de paciente exitoso!")
         return redirect('ingreso_paciente')
@@ -137,6 +149,17 @@ def solicitar_turno(request):
         return redirect('ingreso_paciente')
 
     profesionales = Profesional.objects.all()
+    
+    # Traemos los turnos existentes formateando la hora correctamente a 'HH:MM'
+    turnos_existentes = list(Turno.objects.all().values('profesional_id', 'fecha', 'hora'))
+    for t in turnos_existentes:
+        if t['hora']:
+            t['hora'] = str(t['hora'])[:5] # Recorta los segundos si los hubiera (ej: '10:00:00' -> '10:00')
+
+    contexto = {
+        'profesionales': profesionales,
+        'turnos_existentes': turnos_existentes
+    }
 
     if request.method == 'POST':
         profesional_id = request.POST.get('profesional')
@@ -144,6 +167,34 @@ def solicitar_turno(request):
         hora = request.POST.get('hora')
         motivo = request.POST.get('motivo')
 
+        from datetime import datetime, date, time
+        
+        fecha_obj = datetime.strptime(fecha, '%Y-%m-%d').date()
+        hora_obj = datetime.strptime(hora, '%H:%M').time()
+
+        # 1. Validar que no sea una fecha pasada
+        if fecha_obj < date.today():
+            messages.error(request, "No se pueden solicitar turnos para fechas que ya pasaron.")
+            return render(request, 'turnos/solicitar_turno.html', contexto)
+
+        # 2. Validar que no sea sábado (5) ni domingo (6)
+        if fecha_obj.weekday() >= 5:
+            messages.error(request, "Los fines de semana (sábados y domingos) no se atienden turnos.")
+            return render(request, 'turnos/solicitar_turno.html', contexto)
+
+        # 3. Validar la franja horaria (de 08:00 a 16:00)
+        hora_inicio = time(8, 0)
+        hora_fin = time(16, 0)
+        
+        if not (hora_inicio <= hora_obj <= hora_fin):
+            messages.error(request, "Los turnos solo se pueden solicitar dentro de la franja horaria de 08:00 a 16:00 hs.")
+            return render(request, 'turnos/solicitar_turno.html', contexto)
+
+        # 4. Validar si ya existe un turno ocupado
+        if Turno.objects.filter(profesional_id=profesional_id, fecha=fecha, hora=hora).exists():
+            messages.error(request, "Lo siento, ese profesional ya tiene un turno reservado en ese día y horario.")
+            return render(request, 'turnos/solicitar_turno.html', contexto)
+       
         paciente = Paciente.objects.get(id=paciente_id)
         profesional = Profesional.objects.get(id=profesional_id)
 
@@ -160,8 +211,7 @@ def solicitar_turno(request):
         messages.success(request, "¡Turno solicitado con éxito!")
         return redirect('lista_turnos')
 
-    return render(request, 'turnos/solicitar_turno.html', {'profesionales': profesionales})
-
+    return render(request, 'turnos/solicitar_turno.html', contexto)
 
 def lista_turnos_profesional(request):
     profesional_id = request.session.get('profesional_id')
