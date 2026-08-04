@@ -54,21 +54,22 @@ Si querés clonar este proyecto y correrlo en tu máquina, seguí estos pasos:
 
     ### PowerShell
    python -m venv env
-     .\venv\Scripts\Activate.ps1
+   
+     .\venv\Scripts\activate
      
 
-3. **Instalar dependencias:**
+4. **Instalar dependencias:**
 
     ### PowerShell
     pip install -r requirements.txt
 
 
-4. **Aplicar las migraciones:**
+5. **Aplicar las migraciones:**
 
     ### PowerShell
     python manage.py migrate
 
-5. **Iniciar el servidor de desarrollo:**
+6. **Iniciar el servidor de desarrollo:**
 
     ### PowerShell
     python manage.py runserver
